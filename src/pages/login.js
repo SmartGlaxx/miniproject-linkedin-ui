@@ -124,7 +124,8 @@ const useStyles = makeStyles((theme) => ({
   name2:{  
     background:"#0a66c2",
     padding:"0rem 0.3rem",
-    color:"#fff"
+    color:"#fff",
+    borderRadius:"3px"
   },
   title:{
     textAlign:"left",
@@ -239,7 +240,7 @@ export default function Login() {
       <div className={classes.main}>
         <Grid className={classes.container} container>
           <Grid item className={classes.item}>
-          <div className={classes.inputContainer2}><h2 className={classes.name1}>Valid <span className={classes.name2}>Profits</span></h2></div>
+          <div className={classes.inputContainer2}><h2 className={classes.name1}>Linked<span className={classes.name2}>in</span></h2></div>
           <div className={classes.inputContainer}>
           <div className={classes.innerItem}>
           <h2 className={classes.title}>Sign in</h2>
@@ -258,7 +259,7 @@ export default function Login() {
           </div>
           </div>
           </Grid>
-          <Grid xs={12}>
+          <Grid xs={12} item>
           <div className={classes.inputContainer3}>New to LinkedIn? <Link to='/signup' className={classes.link2}>Join now</Link></div>
           </Grid>
         </Grid>

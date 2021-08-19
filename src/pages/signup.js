@@ -81,7 +81,8 @@ const useStyles = makeStyles((theme) => ({
   name2:{  
   	background:"#0a66c2",
   	padding:"0rem 0.3rem",
-  	color:"#fff"
+  	color:"#fff",
+  	borderRadius:"3px"
   },
   title:{
   	textAlign:"center",
@@ -201,7 +202,7 @@ export default function Signup() {
     <div className={classes.root}>
     {singedUp && (<Redirect push to="/welcome"/>)}
       <div className={classes.main}>
-      <h2 className={classes.name1}>Valid <span className={classes.name2}>Profits</span></h2>
+      <h2 className={classes.name1}>Linked<span className={classes.name2}>in</span></h2>
        	<h2 className={classes.title}>Make the most of your professional life</h2>
        	<Grid className={classes.container} container>
 	       	<Grid item className={classes.item}>

@@ -38,17 +38,25 @@ const useStyles = makeStyles((theme) => ({
   homePage:{
     color:"#0a63bb",
     fontSize:"5rem",
+    fontWeight:"600",
     width:"100%",
     height:"100vh",
-    display:"grid",
-    placeItems:"center",
+    display:"flex",
+    justifyContent:"center",
+    alignItems:"center",
     position:"absolute",
     top:"0",
     lwft:"0",
     bottom:"0",
     right:"0",
     zIndex:"0"
-  }
+  },
+  name2:{  
+    background:"#0a66c2",
+    padding:"0rem 0.7rem",
+    color:"#fff",
+    borderRadius:"6px"
+  },
 }));
 
 export default function Home() {
@@ -56,7 +64,7 @@ export default function Home() {
 
   return (
     <div className={classes.root}>
-    <div className={classes.homePage}>Linked In</div>
+    <div className={classes.homePage}><span>Linked</span><span className={classes.name2}>in</span></div>
       <div className={classes.loginBtn}>
         <Link to='/signup' className={classes.link}>
           <Button variant="text">
