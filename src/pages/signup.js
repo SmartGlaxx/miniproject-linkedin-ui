@@ -7,6 +7,7 @@ import {Link} from 'react-router-dom'
 import GoogleLogo from '../assets'
 import Axios from 'axios'
 import { Redirect } from 'react-router-dom';
+import GoogleLogin from 'react-google-login'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,8 +40,8 @@ const useStyles = makeStyles((theme) => ({
   },
   item:{
   	background:"#fff",
-  	width:"25rem",
-  	height:"30rem",
+  	width:"22rem",
+  	height:"26rem",
   	textAlign:'center',
   	padding:"2rem",
   	[theme.breakpoints.down('sm')]:{
@@ -50,14 +51,21 @@ const useStyles = makeStyles((theme) => ({
   input:{
   	margin:'1rem',
   	width:"95%",
-  	height:"1.3rem",
+  	// height:"1.7rem",
   	margin:"0 auto",
+  	padding:"0.3rem",
+   '&:focus':{
+      outline:"1px solid #0a66c2"
+    }
   },
   inputContainer:{
   	width:"95%",
   	margin:"0 auto",
   	[theme.breakpoints.down('sm')]:{
   		width:"50%"
+  	},
+  	 [theme.breakpoints.down('xs')]:{
+  		width:"100%"
   	}
   },
   label:{
@@ -73,6 +81,11 @@ const useStyles = makeStyles((theme) => ({
   	textDecoration:'none',
   	color:"#0a66c2"
   },
+  link3:{
+  	textDecoration:'none',
+  	padding:"0 0.5rem",
+  	color: "#777"
+  },
   name1:{
   	textAlign:"center",
   	fontWeight:"700",
@@ -86,14 +99,19 @@ const useStyles = makeStyles((theme) => ({
   },
   title:{
   	textAlign:"center",
-  	fontWeight:"400"
+  	fontWeight:"400",
+  	fontSize:"1.6rem",
+  	[theme.breakpoints.down('sm')]:{
+  		fontSize:"1.5rem",
+  		margin:"0 2rem"
+  	}
   },
   agree:{
   	margin:"0.5rem 0",
     border:"1.4px solid #0a63bb",
     borderRadius:"3rem",
     color:"#0a63bb",
-    padding:"0.1rem 2rem",
+    padding:"0.6rem 2rem",
     color:"#fff",
     width:"100%",
     background:"#0a66c2",
@@ -113,13 +131,27 @@ const useStyles = makeStyles((theme) => ({
   	fontSize:"0.8rem",
   	color:"#555"
   },
+  googlecontainer:{
+  	border:"1.4px solid #0a63bb",
+  	borderRadius:"3rem",
+  	"&:hover":{
+  		cursor:"pointer"
+  	}
+  },
   google:{
-  	margin:"0.5rem 0",
-    border:"1.4px solid #0a63bb",
-    borderRadius:"3rem",
-    color:"#0a63bb",
-    padding:"0.1rem 2rem",
-    width:"100%"
+  	textAlign:"center",
+  	margin:"0 50%",
+  	// paddingLeft:"3rem",
+  	transform:"translateX(-50%)",
+    // border:"1.4px solid #0a63bb",
+    // zIndex:'-10',
+    // color:"#0a63bb",
+    // padding:"0rem 2rem",
+    
+    '&:hover':{
+    	background:"#fff",
+    	cursor:"pointer"
+    }
   },
   google1:{
     textTransform:"uppercase",
@@ -141,8 +173,33 @@ const useStyles = makeStyles((theme) => ({
   	textAlign:"left",
   	color:'red',
   	fontSize:"0.8rem"
-  }
+  },
+  error2:{
+    border:"1px solid red",
+    margin:'1rem',
+  	width:"95%",
+  	// height:"1.7rem",
+  	margin:"0 auto",
+  	padding:"0.3rem",
+   '&:focus':{
+      outline:"1px solid #0a66c2"
+    }
 
+  },
+   bottomNav:{
+    fontSize:"0.7rem",
+    textAlign:'center',
+    width:"100%",
+    position:"fixed",
+    bottom:"0rem",
+    color: "#000",  
+    zIndex:"10",
+    padding: "1rem 0",
+    background:"#fff",
+    [theme.breakpoints.down('sm')]:{
+    display:'none'
+    },
+  },
 }));
 
 
@@ -163,6 +220,7 @@ export default function Signup() {
   	setSignInValue(prev =>{
   		setErrorEmail(false)
   		setErrorPassword(false)
+  		setSingedUp(false)
   		return {...prev, [name] : value}
   	})
   }
@@ -186,7 +244,7 @@ export default function Signup() {
          }
          else if(message == 'Password length'){
            setErrorPassword(true)
-         }else if(message == 'User signed-up'){
+         }else if(message == 'User signed-up.'){
          	setSingedUp(true)
          }
     })
@@ -195,6 +253,38 @@ export default function Signup() {
     })
     }
 
+
+    const responseGoogleCall =async(response)=>{
+    	const {email, googleId} = response.profileObj
+    	
+        const postParams2 = {
+            email : email,
+            password : googleId
+        }
+        console.log(postParams2)
+    
+		   await Axios.post(url, postParams2)
+		    .then(result =>{
+		      const {message} = result.data
+		      console.log(result)
+		         if(message == 'Email exists'){
+		           setErrorEmail(true)
+		         }
+		         else if(message == 'Password length'){
+		           setErrorPassword(true)
+		         }else if(message == 'User signed-up.'){
+		         	setSingedUp(true)
+		         }
+		    })
+		    .catch(error=>{
+		    	console.log(error)
+		    })
+    	 setSingedUp(true)
+    }
+    const responseGoogle2 =(response)=>{
+ 
+    	setSingedUp(false)
+    }
 
 
 
@@ -209,11 +299,11 @@ export default function Signup() {
 	       	<div className={classes.inputContainer}>
 	       	<div className={classes.label}>Email or phone number</div>
 
-	       	<input type='text' value={signInValue.email} onChange={setSignIn} name='email' className={classes.input}/><br />
+	       	<input type='email' value={signInValue.email} onChange={setSignIn} name='email' className={errorEmail ? classes.error2 : classes.input}/><br />
 	       	{errorEmail && <div className={classes.error}>Email exists. <Link to='/login' className={classes.link2}> Please login</Link></div>}
 	       	
 	       	<div className={classes.label}>Password (6 or more characters)</div>
-	       	<input type='password' value={signInValue.password} onChange={setSignIn} name='password' className={classes.input}/><br />
+	       	<input type='password' value={signInValue.password} onChange={setSignIn} name='password' className={errorPassword ? classes.error2 : classes.input}/><br />
 	       	{errorPassword && <div className={classes.error}>The password you provided must have at least 6 characters.</div>}
 
 	       	<span className={classes.terms}>By clicking Agree & Join, you agree to the LinkedIn <Link to='/' className={classes.link2}>User Agreement</Link>
@@ -221,15 +311,30 @@ export default function Signup() {
 	       	<Button variant='text'  className={classes.agree} onClick={signup}>
 	       	<span className={classes.agree1}>A</span><span className={classes.agree2}>gree & Join</span></Button><br />
 	       	<span className={classes.hr}><hr className={classes.hr1}/>or<hr className={classes.hr1}/></span>
-	       	<Button variant='text'  className={classes.google}>
 	       	
+	       	<div className={classes.googlecontainer}>
+	       	<GoogleLogin 
+	       	clientId ='643162463921-gf96ma4qgc131dknjf393ao0m66spv4p.apps.googleusercontent.com'
+	       	buttonText=''
+	       	onSuccess={responseGoogleCall}
+	       	onFailure={responseGoogle2}
+	       	cookiePolicy={'single_host_origin'}
+	       	>
 	       	<span className={classes.google1}>J</span>
-	       	<span className={classes.google2}>oin with Google</span></Button><br />
+	       	<span className={classes.google2}>oin with <span className={classes.google1}>G</span>oogle</span>
+	       	</GoogleLogin></div>
+	       	<br />
 	       	<span>Already on LinkedIn? <Link to= '/login' className={classes.link}>Sign in</Link></span>
 	       	</div>
 	       	</Grid>
        	</Grid>
       </div>
+   	<div className={classes.bottomNav}>
+   	<Link to='/' className={classes.link3}>Español</Link>
+   	<Link to='/' className={classes.link3}>Português</Link>
+   	<Link to='/' className={classes.link3}>Français</Link>
+   	<Link to='/' className={classes.link3}>简体中文</Link>
+   	</div>
     </div>
   );
 }

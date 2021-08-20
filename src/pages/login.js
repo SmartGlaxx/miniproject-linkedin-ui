@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     // background:'#f3f2ef',
     background:"#fff",
     height:"100vh",
-    width:"100%",
+    // width:"100%",
     padding:"0",
     margin:"0",
     [theme.breakpoints.down('sm')]:{
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     display:'flex',
   },
   container:{
-    width:"100%",
+    // width:"100%",
     display:"flex",
     alignItems:"center",
     justifyContent:"center",
@@ -45,50 +45,52 @@ const useStyles = makeStyles((theme) => ({
     textAlign:'center',
     padding:"2rem 0",
     //boxShadow: "0 2.8px 2.2px rgba(0, 0, 0, 0.02), 0 6.7px 5.3px rgba(0, 0, 0, 0.028), 0 12.5px 10px rgba(0, 0, 0, 0.035),0 22.3px 17.9px rgba(0, 0, 0, 0.042),0 41.8px 33.4px rgba(0, 0, 0, 0.05),0 100px 80px rgba(0, 0, 0, 0.07)",
-    [theme.breakpoints.down('sm')]:{
+    [theme.breakpoints.down('xs')]:{
       width:"100%",
-      padding:"2rem 0",
+      padding:"2rem 0"
     }
   },
   innerItem:{
     background:"#fff",
     width:"100%",
     height:"25rem",
-    // textAlign:'center',
-    padding:"2rem",
+    padding:"0 2rem",
     boxSizing:"border-box",
     boxShadow: "0 2.8px 2.2px rgba(0, 0, 0, 0.02), 0 6.7px 5.3px rgba(0, 0, 0, 0.028), 0 12.5px 10px rgba(0, 0, 0, 0.035),0 22.3px 17.9px rgba(0, 0, 0, 0.042),0 41.8px 33.4px rgba(0, 0, 0, 0.05),0 100px 80px rgba(0, 0, 0, 0.07)",
 
-    // boxShadow: "0 0.2px 2.7px rgba(0, 0, 0, 0.022),0 0.4px 6.9px rgba(0, 0, 0, 0.031),0 0.9px 14.2px rgba(0, 0, 0, 0.039), 1.8px 29.2px rgba(0, 0, 0, 0.048),0 5px 80px rgba(0, 0, 0, 0.07)",
-
-
     [theme.breakpoints.down('sm')]:{
-      width:"100%"
+       padding:"0 2rem",
+    },
+    [theme.breakpoints.down('xs')]:{
+      // width:"100vw",
+      boxShadow: "0 0 0  black",
     }
   },
   input:{
     margin:'1rem',
-    width:"95%",
-    height:"1.3rem",
+    width:"90%",
+    // height:"1.7rem",
     margin:"0 auto",
-    // [theme.breakpoints.down('sm')]:{
-    //  width:"50%"
-    // }
+    padding:"0.7rem",
+    '&:focus':{
+      outline:"1px solid #0a66c2"
+    }
   },
   inputContainer:{
     // margin:'1rem',
-    width:"95%",
+    // width:"100%",
     margin:"0 auto",
-    [theme.breakpoints.down('sm')]:{
-      width:"50%"
+    [theme.breakpoints.down('xs')]:{
+       // width:"100%"
     }
   },
   inputContainer2:{
     // margin:'1rem',
-    width:"95%",
+    // width:"95%",
     margin:"0 auto",
     [theme.breakpoints.down('sm')]:{
-      width:"50%"
+      // width:"100%",
+      padding:"0 2rem"
     }
   },
   inputContainer3:{
@@ -139,10 +141,14 @@ const useStyles = makeStyles((theme) => ({
     border:"1.4px solid #0a63bb",
     borderRadius:"3rem",
     color:"#0a63bb",
-    padding:"0.3rem 2rem",
+    // padding:"0.3rem 2rem",
     color:"#fff",
     width:"100%",
-    background:"#0a66c2"
+    background:"#0a66c2",
+    '&:hover':{
+      background:"#fff",
+      color:"#0a66c2"
+    }
   },
   signin1:{
     textTransform:"uppercase",
@@ -184,7 +190,62 @@ const useStyles = makeStyles((theme) => ({
     textAlign:"left",
     color:'red',
     fontSize:"0.8rem"
-  }
+  },
+  error2:{
+    border:"1px solid red",
+     margin:'1rem',
+    width:"95%",
+    // height:"1.7rem",
+    margin:"0 auto",
+    padding:"0.7rem",
+    '&:focus':{
+      outline:"1px solid #0a66c2"
+    }
+
+  },
+   bottomNav:{
+    fontSize:"0.7rem",
+    textAlign:'center',
+    width:"100%",
+    position:"fixed",
+    bottom:"1.2rem",
+    color: "#000",  
+    zIndex:"10",
+    [theme.breakpoints.down('sm')]:{
+    display:'none'
+    },
+  },
+  bottomNavOuter:{
+    padding:"0 0.5rem",
+    color: "#222",
+    fontWeight:"900"
+  },
+  bottomNavOuter2:{
+    color: "#fff",
+    background:"#222",
+    padding:"0 0.2rem",
+    fontWeight:"900",
+    margin:"0 0.1rem"
+  },
+  select:{
+    border:"1px solid white",
+    outline:"1px solid white",
+    width:"1rem",
+    fontWeight:"100",
+    margin:"0 0.3rem",
+    '&:focus':{
+      border:"1px solid white",
+      outline:"1px solid white"
+    }
+  },
+  option:{
+    color:"#0a66c2",
+  },
+  link3:{
+    textDecoration:'none',
+    padding:"0 0.5rem",
+    color: "#777"
+  },
 }));
 
 
@@ -216,7 +277,7 @@ export default function Login() {
             email : email,
             password : password
         }
-    
+  
    await Axios.post(url, postParams)
     .then(result =>{
       const {message} = result.data
@@ -227,6 +288,7 @@ export default function Login() {
          }else if(message == 'Password length'){
            setErrorPassword(true)
          }
+
     })
     .catch(error=>{
       console.log(error)
@@ -246,10 +308,10 @@ export default function Login() {
           <h2 className={classes.title}>Sign in</h2>
           <div className={classes.sub}>Stay updated on your professional world</div>
           <div className={classes.label}>Email or phone number</div>
-          <input type='text' value={signInValue.email} onChange={setSignIn} name='email' className={classes.input}/><br />
+          <input type='email' value={signInValue.email} onChange={setSignIn} name='email' className={errorValidate ? classes.error2 : classes.input}/><br />
           {errorValidate && <div className={classes.error}>Couldn’t find a LinkedIn account associated with this email / password combination. Please try again.</div>}
           <div className={classes.label}>Password (6 or more characters)</div>
-          <input type='password' value={signInValue.password} onChange={setSignIn} name='password' className={classes.input}/><br />
+          <input type='password' value={signInValue.password} onChange={setSignIn} name='password' className={errorPassword ? classes.error2 : classes.input}/><br />
          {errorPassword && <div className={classes.error}>The password you provided must have at least 6 characters.</div>}
 
           <div className={classes.reset}><Link to='/' className={classes.link2}>Forgot password?</Link></div><br />
@@ -263,8 +325,28 @@ export default function Login() {
           <div className={classes.inputContainer3}>New to LinkedIn? <Link to='/signup' className={classes.link2}>Join now</Link></div>
           </Grid>
         </Grid>
-
       </div>
+         <div className={classes.bottomNav}>
+      <span className={classes.bottomNavOuter}>Linked
+      <span className={classes.bottomNavOuter2}>in</span>
+      &copy; 2020
+      </span>
+<Link to='/' className={classes.link3}>User Agreement</Link>
+<Link to='/' className={classes.link3}>Privacy Policy</Link>
+<Link to='/' className={classes.link3}>Community Guidelines</Link>
+<Link to='/' className={classes.link3}>Cookie Policy</Link>
+<Link to='/' className={classes.link3}>Copyright Policy</Link>
+<Link to='/' className={classes.link3}>Send Feedback</Link>
+Language<select className={classes.select}>
+<option></option>
+<option className={classes.option}>Dansk</option>
+<option className={classes.option}>Deutsch</option>
+<option className={classes.option}>English</option>
+<option className={classes.option}>Espanol</option>
+<option className={classes.option}>Francais</option>
+<option className={classes.option}>Bahasa</option>
+<option className={classes.option}>Norsk</option>
+</select></div>
     </div>
   );
 }
