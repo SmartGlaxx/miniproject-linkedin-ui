@@ -1,10 +1,8 @@
 import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import {Link} from 'react-router-dom'
-import GoogleLogo from '../assets'
 import Axios from 'axios'
 import { Redirect } from 'react-router-dom';
 import GoogleLogin from 'react-google-login'
@@ -49,7 +47,6 @@ const useStyles = makeStyles((theme) => ({
   	}
   },
   input:{
-  	margin:'1rem',
   	width:"95%",
   	// height:"1.7rem",
   	margin:"0 auto",
@@ -110,7 +107,6 @@ const useStyles = makeStyles((theme) => ({
   	margin:"0.5rem 0",
     border:"1.4px solid #0a63bb",
     borderRadius:"3rem",
-    color:"#0a63bb",
     padding:"0.6rem 2rem",
     color:"#fff",
     width:"100%",
@@ -176,7 +172,7 @@ const useStyles = makeStyles((theme) => ({
   },
   error2:{
     border:"1px solid red",
-    margin:'1rem',
+    
   	width:"95%",
   	// height:"1.7rem",
   	margin:"0 auto",
@@ -239,12 +235,12 @@ export default function Signup() {
     .then(result =>{
       const {message} = result.data
       console.log(result)
-         if(message == 'Email exists'){
+         if(message === 'Email exists'){
            setErrorEmail(true)
          }
-         else if(message == 'Password length'){
+         else if(message === 'Password length'){
            setErrorPassword(true)
-         }else if(message == 'User signed-up.'){
+         }else if(message === 'User signed-up.'){
          	setSingedUp(true)
          }
     })
@@ -267,12 +263,12 @@ export default function Signup() {
 		    .then(result =>{
 		      const {message} = result.data
 		      console.log(result)
-		         if(message == 'Email exists'){
+		         if(message === 'Email exists'){
 		           setErrorEmail(true)
 		         }
-		         else if(message == 'Password length'){
+		         else if(message === 'Password length'){
 		           setErrorPassword(true)
-		         }else if(message == 'User signed-up.'){
+		         }else if(message === 'User signed-up.'){
 		         	setSingedUp(true)
 		         }
 		    })

@@ -1,10 +1,8 @@
 import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import {Link} from 'react-router-dom'
-import GoogleLogo from '../assets'
 import Axios from 'axios'
 import { Redirect } from 'react-router-dom';
 
@@ -67,7 +65,6 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   input:{
-    margin:'1rem',
     width:"90%",
     // height:"1.7rem",
     margin:"0 auto",
@@ -140,7 +137,6 @@ const useStyles = makeStyles((theme) => ({
     margin:"0.5rem 0",
     border:"1.4px solid #0a63bb",
     borderRadius:"3rem",
-    color:"#0a63bb",
     // padding:"0.3rem 2rem",
     color:"#fff",
     width:"100%",
@@ -193,7 +189,6 @@ const useStyles = makeStyles((theme) => ({
   },
   error2:{
     border:"1px solid red",
-     margin:'1rem',
     width:"95%",
     // height:"1.7rem",
     margin:"0 auto",
@@ -281,11 +276,11 @@ export default function Login() {
    await Axios.post(url, postParams)
     .then(result =>{
       const {message} = result.data
-         if(message == 'success'){
+         if(message === 'success'){
            setRedirect(true)
-         }else if(message == 'failed'){
+         }else if(message === 'failed'){
           setErrorValidate(true)
-         }else if(message == 'Password length'){
+         }else if(message === 'Password length'){
            setErrorPassword(true)
          }
 
